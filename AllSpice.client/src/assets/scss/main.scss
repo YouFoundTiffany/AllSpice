@@ -4,7 +4,26 @@
 @import "./_utilities.scss";
 @import "./loaders.scss";
 
-body{
+
+:root {
+  --Coral: #C7493A;
+  --Vermillion: #A33327;
+  --RussionGreen: #689775;
+  --Nutmeg: #917164;
+  --MochaSlate: #AD8174;
+}
+
+
+.Poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+.Lora {
+  font-family: 'Lora', serif;
+}
+
+
+body {
   overscroll-behavior: none;
 }
 
@@ -30,6 +49,7 @@ select {
     &:valid {
       border: 1px solid $success;
     }
+
     &:invalid {
       border: 1px solid $danger;
     }
