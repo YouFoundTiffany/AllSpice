@@ -15,7 +15,7 @@ CREATE TABLE
         id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         instructions VARCHAR(1000) NOT NULL,
-        coverImg VARCHAR(500) NOT NULL,
+        img VARCHAR(500) NOT NULL,
         category VARCHAR(100) NOT NULL,
         creatorId VARCHAR(255) NOT NULL,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
@@ -91,7 +91,7 @@ FROM accounts act
     JOIN recipes rec ON rec.creatorId = act.id
 WHERE act.id = 'xxxxx'
 
-DELETE FROM albums WHERE id = 3;
+DELETE FROM recipes WHERE id = 3;
 
 SELECT * FROM favorites;
 
@@ -116,12 +116,7 @@ VALUES (
     );
 
 INSERT INTO
-    recipes(
-        category,
-        title,
-        coverImg,
-        creatorId
-    )
+    recipes(category, title, img, creatorId)
 VALUES (
         'Convention',
         'Ping Pong Association',
@@ -130,12 +125,7 @@ VALUES (
     );
 
 INSERT INTO
-    recipes(
-        category,
-        title,
-        coverImg,
-        creatorId
-    )
+    recipes(category, title, img, creatorId)
 VALUES (
         'Concert',
         'Pong',
@@ -144,7 +134,7 @@ VALUES (
     );
 
 INSERT INTO
-    ingredients (imgUrl, creatorId, albumId)
+    ingredients (imgUrl, creatorId, recipeId)
 VALUES (
         "https://images.unsplash.com/photo-1605548587049-8bda5bfdbbf7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTAwfHxwaW5nJTIwcG9uZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60",
         '6526c4304dedc9f41b528495',
@@ -152,7 +142,7 @@ VALUES (
     );
 
 INSERT INTO
-    favorites(albumId, accountId)
+    favorites(recipeId, accountId)
 VALUES (
         20,
         '6526c4304dedc9f41b528495'

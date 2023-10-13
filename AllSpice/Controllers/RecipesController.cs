@@ -3,7 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace AllSpice.Controllers;
 
 [ApiController]
-[Route("api/albums")]
+[Route("api/recipes")]
 
 public class RecipesController : ControllerBase
 {

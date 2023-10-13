@@ -11,16 +11,16 @@ public class IngredientsRepository
     internal Ingredient CreateIngredient(Ingredient ingredientData)
     {
         string sql = @"
-        INSTERT INTO ingredients
-        (name, accountId, recipeId)
-        VALUES
-        (@name, @accountId, @recipeId)
-        SELECT
-        ing.*,
-        act.*,
-        FROM ingredients ing
-        JOIN accounts act On act.id = @creatorId
-        WHERE ing.id = LAST_INSTER_ID();";
+            INSTERT INTO ingredients
+                (name, quantity, recipeId, creatorId, createdAt, updatedAt, creator)
+            VALUES
+                (@name, @quantity, @recipeId, @creatorId, @createdAt, @updatedAt, @creator)
+            SELECT
+            ing.*,
+            act.*,
+            FROM ingredients ing
+            JOIN accounts act On act.id = @creatorId
+            WHERE ing.id = LAST_INSTER_ID();";
         Ingredient newIngredient = _db.Query<Ingredient, Account, Ingredient>(sql, (ingredient, account) =>
         {
             ingredient.Creator = account;
