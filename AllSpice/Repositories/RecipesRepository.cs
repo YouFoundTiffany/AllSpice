@@ -15,11 +15,9 @@ public class RecipesRepository
             INSERT INTO recipes
                 (title, instructions, img, category, creatorId, createdAt, updatedAt)
             VALUES
-                (@title, @instructions, @img, @category, @creatorId, @createdAt, @updatedAt)
+                (@title, @instructions, @img, @category, @creatorId, @createdAt, @updatedAt);
 
-            SELECT
-            act.*,
-            rec.*
+            SELECT act.*, rec.*
             FROM recipes rec
             JOIN accounts act ON act.id = rec.creatorId
             WHERE rec.id = LAST_INSERT_ID();";
@@ -31,3 +29,4 @@ public class RecipesRepository
         return newRecipe;
     }
 }
+
