@@ -20,7 +20,8 @@ CREATE TABLE
         creatorId VARCHAR(255) NOT NULL,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
-        FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
+        archived TINYINT DEFAULT 0,
+        s FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
 CREATE TABLE

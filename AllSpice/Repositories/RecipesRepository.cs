@@ -13,9 +13,9 @@ public class RecipesRepository
 
         string sql = @"
             INSERT INTO recipes
-                (title, instructions, img, category, creatorId, createdAt, updatedAt)
+                (title, instructions, img, category, creatorId)
             VALUES
-                (@title, @instructions, @img, @category, @creatorId, @createdAt, @updatedAt);
+                (@title, @instructions, @img, @category, @creatorId);
 
             SELECT act.*, rec.*
             FROM recipes rec
@@ -28,5 +28,52 @@ public class RecipesRepository
         }, recipeData).FirstOrDefault();
         return newRecipe;
     }
+    internal List<Recipe> Get()
+    {
+        string sql = @"
+    SELECT rec.*, act.*
+    FROM recipes rec
+    JOIN accounts act ON act.id = rec.creatorId;";
+        List<Recipe> recipes = _db.Query<Recipe, Account, Recipe>(sql, (recipe, account) =>
+        {
+            recipe.Creator = account;
+            return recipe;
+        }).ToList();
+        return recipes;
+    }
+
+    internal Recipe Get(int recipeId)
+    {
+        string sql = @"
+        SELECT rec.*, act.*
+        FROM recipes rec
+        JOIN accounts act ON rec.creatorId = act.id
+        WHERE rec.id = @recipeId
+        ;";
+        Recipe foundRecipe = _db.Query<Recipe, Account, Recipe>(sql, (recipe, creator) =>
+        {
+            recipe.Creator = creator;
+            return recipe;
+        }, new { recipeId }).FirstOrDefault();
+        return foundRecipe;
+    }
+    internal void Edit(Recipe recipe)
+    {
+        string sql = @"
+        UPDATE recipes
+        SET
+        title = @title
+        instructions = @instructions
+        img = @img
+        category = @category
+        creatorId = @creatorId
+        WHERE id = @id
+        ;";
+        DbString.Execute(sql, recipe);
+    }
+
+
+
+
 }
 

@@ -15,6 +15,10 @@ public class IngredientsService
     }
 
 
-
+    internal List<Ingredient> GetIngredientByRecipeId(int recipeId)
+    {
+        List<Ingredient> ingredients = _repo.GetIngredientByRecipeId(recipeId);
+        return ingredients;
+    }
 
 }

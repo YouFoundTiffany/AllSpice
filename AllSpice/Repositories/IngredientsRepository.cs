@@ -12,9 +12,9 @@ public class IngredientsRepository
     {
         string sql = @"
             INSTERT INTO ingredients
-                (name, quantity, recipeId, creatorId, createdAt, updatedAt, creator)
+                (name, quantity, recipeId, creatorId, creator)
             VALUES
-                (@name, @quantity, @recipeId, @creatorId, @createdAt, @updatedAt, @creator)
+                (@name, @quantity, @recipeId, @creatorId,@creator)
             SELECT
             ing.*,
             act.*,
@@ -30,6 +30,23 @@ public class IngredientsRepository
     }
 
 
+
+
+
+    internal List<Ingredient> GetIngredientByRecipeId(int recipeId)
+    {
+        string sql = @"
+        SELECT ing.*, act.*
+        FROM ingredient ing
+        JOIN accounts act ON act.id = ing.creatorId
+        WHERE recipeId = @recipeId;";
+        List<Ingredient> ingredients = _db.Query<Ingredient, Account, Ingredient>(sql, (ingredient, account) =>
+        {
+            ingredient.Creator = account;
+            return ingredient;
+        }, new { recipeId }).ToList();
+        return ingredients;
+    }
 
 
 }

@@ -6,9 +6,8 @@ public class Ingredient
     public string Name { get; set; }
     public string Quantity { get; set; }
     public int RecipeId { get; set; }
+    // FIXME Take lower two off
     public string CreatorId { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
     public Account Creator { get; set; }
 
 }

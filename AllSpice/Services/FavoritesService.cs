@@ -15,5 +15,13 @@ public class FavoritesService
         return newFavorite;
     }
 
+    // NOTE see on Favorites Repository and Recipes Controller
+    internal List<AccountFavoriteViewModel> GetFavoritesByRecipeId(int recipeId)
+    {
+        List<AccountFavoriteViewModel> favorites = _repo.GetFavoritesByRecipeId(recipeId);
+        return favorites;
+    }
+
+
 
 }

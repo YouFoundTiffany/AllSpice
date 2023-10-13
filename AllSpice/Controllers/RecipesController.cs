@@ -38,9 +38,78 @@ public class RecipesController : ControllerBase
         }
     }
 
+    [HttpGet]
+    public ActionResult<List<Recipe>> Get()
+    {
+        try
+        {
+            List<Recipe> recipes = _recipesService.Get();
+            return recipes;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+
+    [HttpGet("{recipeId}")]
+    public ActionResult<Recipe> GetById(int recipeId)
+    {
+        try
+        {
+            Recipe recipe = _recipesService.Get(recipeId);
+            return recipe;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
 
 
-
+    // NOTE see below on Ingredient Service and Ingredient Repo
+    [HttpGet("{recipeId}/ingredients")]
+    public ActionResult<List<Ingredient>> GetIngredientByRecipeId(int recipeId)
+    {
+        try
+        {
+            List<Ingredient> ingredients = _ingredientsService.GetIngredientByRecipeId(recipeId);
+            return ingredients;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+    // NOTE see on Favorites Service and Favorites Repository
+    [HttpGet("{recipeId}/favorites")]
+    public ActionResult<List<AccountFavoriteViewModel>> GetFavoritesByRecipeId(int recipeId)
+    {
+        try
+        {
+            List<AccountFavoriteViewModel> favorites = _favoritesService.GetFavoritesByRecipeId(recipeId);
+            return favorites;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+    [Authorize]
+    [HttpDelete("{recipeId}")]
+    public async Task<ActionResult<Recipe>> ArchiveRecipe(int recipeId)
+    {
+        try
+        {
+            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+            Recipe recipe = _recipesService.ArchiveRecipe(recipeId, userInfo.Id);
+            return recipe;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
 
 
 }
