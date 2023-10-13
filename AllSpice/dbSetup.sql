@@ -18,10 +18,10 @@ CREATE TABLE
         img VARCHAR(500) NOT NULL,
         category VARCHAR(100) NOT NULL,
         creatorId VARCHAR(255) NOT NULL,
+        archived TINYINT DEFAULT 0,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
-        archived TINYINT DEFAULT 0,
-        s FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
+        FOREIGN KEY(creatorId) REFERENCES accounts(id) ON DELETE CASCADE
     ) default charset utf8 COMMENT '';
 
 CREATE TABLE

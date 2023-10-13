@@ -28,12 +28,12 @@ public class RecipesRepository
         }, recipeData).FirstOrDefault();
         return newRecipe;
     }
-    internal List<Recipe> Get()
+    internal List<Recipe> GetAllRecipes()
     {
         string sql = @"
-    SELECT rec.*, act.*
-    FROM recipes rec
-    JOIN accounts act ON act.id = rec.creatorId;";
+            SELECT rec.*, act.*
+            FROM recipes rec
+            JOIN accounts act ON act.id = rec.creatorId;";
         List<Recipe> recipes = _db.Query<Recipe, Account, Recipe>(sql, (recipe, account) =>
         {
             recipe.Creator = account;
@@ -42,7 +42,7 @@ public class RecipesRepository
         return recipes;
     }
 
-    internal Recipe Get(int recipeId)
+    internal Recipe GetRecipeById(int recipeId)
     {
         string sql = @"
         SELECT rec.*, act.*
@@ -57,21 +57,42 @@ public class RecipesRepository
         }, new { recipeId }).FirstOrDefault();
         return foundRecipe;
     }
-    internal void Edit(Recipe recipe)
+    // internal void UpdateRecipe(Recipe recipe)
+    // {
+    //     string sql = @"
+    //     UPDATE recipes
+    //     SET
+    //     title = @title,
+    //     instructions = @instructions,
+    //     img = @img,
+    //     category = @category,
+    //     WHERE id = @id
+    //     LIMIT 1;
+    //     ;";
+    //     _db.Execute(sql, recipe);
+    // }
+
+    // STUB Edit Recipe
+    internal Recipe UpdateRecipe(Recipe originalRecipe)
     {
         string sql = @"
         UPDATE recipes
         SET
-        title = @title
-        instructions = @instructions
-        img = @img
-        category = @category
-        creatorId = @creatorId
+        title = @title,
+        instructions = @instructions,
+        img = @img,
+        category = @category,
         WHERE id = @id
+        LIMIT 1;
+    SELECT * FROM recipes WHERE id=i@d
         ;";
-        DbString.Execute(sql, recipe);
-    }
 
+        // NOTE From GregsList - we run QueryFirstOrDefault here so that we update the car and then select that car so that we have proper updatedAt timestamps
+
+        Recipe updatedRecipe = _db.QueryFirstOrDefault<Recipe>(sql, originalRecipe);
+
+        return updatedRecipe;
+    }
 
 
 

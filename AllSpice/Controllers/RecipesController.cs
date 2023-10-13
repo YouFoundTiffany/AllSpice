@@ -43,7 +43,7 @@ public class RecipesController : ControllerBase
     {
         try
         {
-            List<Recipe> recipes = _recipesService.Get();
+            List<Recipe> recipes = _recipesService.GetAllRecipes();
             return recipes;
         }
         catch (Exception error)
@@ -52,12 +52,14 @@ public class RecipesController : ControllerBase
         }
     }
 
+    // STUB Edit Recipe
+
     [HttpGet("{recipeId}")]
-    public ActionResult<Recipe> GetById(int recipeId)
+    public ActionResult<Recipe> GetRecipeById(int recipeId)
     {
         try
         {
-            Recipe recipe = _recipesService.Get(recipeId);
+            Recipe recipe = _recipesService.GetRecipeById(recipeId);
             return recipe;
         }
         catch (Exception error)

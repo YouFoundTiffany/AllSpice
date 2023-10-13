@@ -33,12 +33,34 @@ public class FavoritesRepository
     }
 
     // REVIEW
-    internal List<RecipeFavoriteViewModel> GetRecipesByAccount
+    internal List<RecipeFavoriteViewModel> GetRecipesByAccount(string accountId)
+    {
+        string sql = @"
+        SELECT fav.*, rec.*
+        FROM favorites fav
+        JOIN recipes rec ON rec.id = fav.recipeId
+        WHERE fav.accountId = @accountId
+       ;";
+        List<RecipeFavoriteViewModel> myRecipes = _db.Query<Favorite, RecipeFavoriteViewModel, RecipeFavoriteViewModel>(sql, (fav, recipe) =>
+        {
+            recipe.FavoriteId = fav.Id;
+            recipe.AccountId = fav.AccountId;
+            return recipe;
 
+        }, new { accountId }).ToList();
+        return myRecipes;
+    }
 
-
-
-
+    internal Favorite GetById(int favoriteId)
+    {
+        string sql = @"
+    SELECT *
+    FROM favorites
+    WHERE id = @favoritesId
+    ;";
+        Favorite favorite = _db.Query<Favorite>(sql, new { favoriteId }).FirstOrDefault();
+        return favorite;
+    }
 
 
     // NOTE see on Favorites Service and Recipes Controller
