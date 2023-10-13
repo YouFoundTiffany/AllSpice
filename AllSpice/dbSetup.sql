@@ -108,11 +108,10 @@ WHERE recipeId = 3;
 -- INSERTS
 
 INSERT INTO
-    recipes(title, creatorId)
+    recipes(title, category, creatorId)
 VALUES (
-        'Sport',
-        'Ping Pong Tournament',
-        'https://images.unsplash.com/photo-1609710228159-0fa9bd7c0827?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        'test recipe a',
+        'Merican',
         '64f76f68599293f30abc2ade'
     );
 

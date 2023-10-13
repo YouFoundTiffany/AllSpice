@@ -3,7 +3,6 @@ namespace AllSpice.Repositories;
 public class AccountsRepository
 {
   private readonly IDbConnection _db;
-
   public AccountsRepository(IDbConnection db)
   {
     _db = db;
@@ -36,7 +35,7 @@ public class AccountsRepository
   {
     string sql = @"
             UPDATE accounts
-            SET 
+            SET
               name = @Name,
               picture = @Picture
             WHERE id = @Id;";

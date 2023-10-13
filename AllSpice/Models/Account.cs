@@ -11,7 +11,7 @@ public class Account
 }
 
 
-public class AccountFavoriteViewModel : Account
+public class RecipeFavoriteViewModel : Account
 {
   public int FavoriteId { get; set; }
   public int RecipeId { get; set; }
