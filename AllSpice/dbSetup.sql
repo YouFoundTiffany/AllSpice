@@ -25,7 +25,7 @@ CREATE TABLE
     ) default charset utf8 COMMENT '';
 
 CREATE TABLE
-    IF NOT EXISTS ingredients(
+    IF NOT EXISTS ingredient(
         id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
         quantity VARCHAR(100) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS favorites(
-        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT PRIMARY KEY,
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         recipeId INT NOT NULL,
         creatorId VARCHAR(255) NOT NULL,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',

@@ -54,10 +54,10 @@ public class FavoritesRepository
     internal Favorite GetById(int favoriteId)
     {
         string sql = @"
-    SELECT *
-    FROM favorites
-    WHERE id = @favoritesId
-    ;";
+        SELECT *
+        FROM favorites
+        WHERE id = @favoritesId
+        ;";
         Favorite favorite = _db.Query<Favorite>(sql, new { favoriteId }).FirstOrDefault();
         return favorite;
     }

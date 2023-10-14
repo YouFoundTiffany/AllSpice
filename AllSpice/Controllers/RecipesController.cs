@@ -70,19 +70,19 @@ public class RecipesController : ControllerBase
 
 
     // NOTE see below on Ingredient Service and Ingredient Repo
-    // [HttpGet("{recipeId}/ingredients")]
-    // public ActionResult<List<Ingredient>> GetIngredientByRecipeId(int recipeId)
-    // {
-    //     try
-    //     {
-    //         List<Ingredient> ingredients = _ingredientsService.GetIngredientByRecipeId(recipeId);
-    //         return ingredients;
-    //     }
-    //     catch (Exception error)
-    //     {
-    //         return BadRequest(error.Message);
-    //     }
-    // }
+    [HttpGet("{recipeId}/ingredients")]
+    public ActionResult<List<Ingredient>> GetIngredientsByRecipeId(int recipeId)
+    {
+        try
+        {
+            List<Ingredient> ingredients = _ingredientsService.GetIngredientsByRecipeId(recipeId);
+            return ingredients;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
     // NOTE see on Favorites Service and Favorites Repository
     [HttpGet("{recipeId}/favorites")]
     public ActionResult<List<AccountFavoriteViewModel>> GetFavoritesByRecipeId(int recipeId)

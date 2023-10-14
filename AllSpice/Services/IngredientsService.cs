@@ -8,17 +8,17 @@ public class IngredientsService
     {
         _repo = repo;
     }
-    // internal Ingredient CreateIngredient(Ingredient ingredientData)
-    // {
-    //     Ingredient newIngredient = _repo.CreateIngredient(ingredientData);
-    //     return newIngredient;
-    // }
+    internal Ingredient CreateIngredient(Ingredient ingredientData)
+    {
+        Ingredient newIngredient = _repo.CreateIngredient(ingredientData);
+        return newIngredient;
+    }
 
 
-    // internal List<Ingredient> GetIngredientByRecipeId(int recipeId)
-    // {
-    //     List<Ingredient> ingredients = _repo.GetIngredientByRecipeId(recipeId);
-    //     return ingredients;
-    // }
+    internal List<Ingredient> GetIngredientsByRecipeId(int recipeId)
+    {
+        List<Ingredient> ingredients = _repo.GetIngredientsByRecipeId(recipeId);
+        return ingredients;
+    }
 
 }
