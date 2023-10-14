@@ -15,7 +15,7 @@ public class RecipesRepository
             INSERT INTO recipes
                 (title, instructions, img, category, creatorId)
             VALUES
-                (@title, @instructions, @img, @category, @creatorId);
+                (@Title, @Instructions, @Img, @Category, @CreatorId);
 
             SELECT act.*, rec.*
             FROM recipes rec
