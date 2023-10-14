@@ -57,20 +57,6 @@ public class RecipesRepository
         }, new { recipeId }).FirstOrDefault();
         return foundRecipe;
     }
-    // internal void UpdateRecipe(Recipe recipe)
-    // {
-    //     string sql = @"
-    //     UPDATE recipes
-    //     SET
-    //     title = @title,
-    //     instructions = @instructions,
-    //     img = @img,
-    //     category = @category,
-    //     WHERE id = @id
-    //     LIMIT 1;
-    //     ;";
-    //     _db.Execute(sql, recipe);
-    // }
 
     // STUB Edit Recipe
     internal Recipe UpdateRecipe(Recipe originalRecipe)
@@ -78,16 +64,16 @@ public class RecipesRepository
         string sql = @"
         UPDATE recipes
         SET
-        title = @title,
-        instructions = @instructions,
-        img = @img,
-        category = @category,
-        WHERE id = @id
+        title = @Title,
+        instructions = @Instructions,
+        img = @Img,
+        category = @Category
+        WHERE id = @Id
         LIMIT 1;
-    SELECT * FROM recipes WHERE id=i@d
+        HERE id=@Id
         ;";
 
-        // NOTE From GregsList - we run QueryFirstOrDefault here so that we update the car and then select that car so that we have proper updatedAt timestamps
+        // NOTE From GregsList - we run QueryFirstOrDefault here so that we update the recip and then select that recipe so that we have proper updatedAt timestamps
 
         Recipe updatedRecipe = _db.QueryFirstOrDefault<Recipe>(sql, originalRecipe);
 

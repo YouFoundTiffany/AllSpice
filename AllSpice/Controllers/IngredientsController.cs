@@ -11,24 +11,24 @@ public class IngredientsController : ControllerBase
         _ingredientsService = ingredientsService;
         _auth0 = auth0;
     }
-    [Authorize]
-    [HttpPost]
-    public async Task<ActionResult<Ingredient>> CreateIngredient([FromBody] Ingredient ingredientData)
-    {
-        try
-        {
-            Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-            ingredientData.CreatorId = userInfo.Id;
-            Ingredient newIngredient = _ingredientsService.CreateIngredient(ingredientData);
-            // ? newIngredient.Creator = userInfo;
-            return newIngredient;
-        }
-        catch (System.Exception)
-        {
+    // [Authorize]
+    // [HttpPost]
+    // public async Task<ActionResult<Ingredient>> CreateIngredient([FromBody] Ingredient ingredientData)
+    // {
+    //     try
+    //     {
+    //         Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
+    //         ingredientData.CreatorId = userInfo.Id;
+    //         Ingredient newIngredient = _ingredientsService.CreateIngredient(ingredientData);
+    //         // ? newIngredient.Creator = userInfo;
+    //         return newIngredient;
+    //     }
+    //     catch (System.Exception)
+    //     {
 
-            throw;
-        }
-    }
+    //         throw;
+    //     }
+    // }
 
 
 
