@@ -10,17 +10,86 @@
     --Vermillion: #A33327;
     --RussionGreen: #689775;
     --Nutmeg: #917164;
+    --UltraDrkNutmeg: #251c1a;
     --MochaSlate: #AD8174;
+}
+
+/* Background colors utility classes */
+.bg-Coral {
+    background-color: var(--Coral) !important;
+}
+
+.bg-Vermillion {
+    background-color: var(--Vermillion) !important;
+}
+
+.bg-RussianGreen {
+    background-color: var(--RussianGreen) !important;
+}
+
+.bg-Nutmeg {
+    background-color: var(--Nutmeg) !important;
+}
+
+.bg-UltraDrkNutmeg {
+    background-color: var(--UltraDrkNutmeg) !important;
+}
+
+.bg-MochaSlate {
+    background-color: var(--MochaSlate) !important;
+}
+
+/* Text colors utility classes */
+.text-Coral {
+    color: var(--Coral) !important;
+}
+
+.text-Vermillion {
+    color: var(--Vermillion) !important;
+}
+
+.text-RussianGreen {
+    color: var(--RussianGreen) !important;
+}
+
+.text-Nutmeg {
+    color: var(--Nutmeg) !important;
+}
+
+.text-UltraDrkNutmeg {
+    color: var(--NutUltraDrkNutmegmeg) !important;
+}
+
+.text-MochaSlate {
+    color: var(--MochaSlate) !important;
+}
+
+.gradient-vertical {
+    background: linear-gradient(to bottom, var(--Coral), var(--Vermillion)) !important;
+}
+
+.gradient-diagonal {
+    background: linear-gradient(to bottom right, var(--Coral), var(--Vermillion)) !important;
+}
+
+.gradient-radial {
+    background: radial-gradient(circle, var(--Coral), var(--Vermillion)) !important;
+}
+
+.gradient-multiple {
+    background: linear-gradient(to right, var(--Coral), var(--Vermillion), var(--RussianGreen), var(--Nutmeg)) !important;
 }
 
 
 .Poppins {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
 }
 
 .Lora {
-    font-family: 'Lora', serif;
+    font-family: 'Lora', serif !important;
 }
+
+// END OF ALLSPICE SPECIFIC CLASSES
 
 
 body {
