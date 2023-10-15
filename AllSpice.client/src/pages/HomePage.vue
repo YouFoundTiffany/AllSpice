@@ -1,31 +1,30 @@
 <template>
   <div class="container pt-2">
-    <!-- Banner section -->
+    <!-- STUB Banner section -->
     <section class="row">
       <div class="col-12 bannerImg shadow">
         <!-- Search bar and user icon row -->
-        <div class="row justify-content-end">
-          <div class="col-md-4">
-            <div class="input-group">
-              <input class="form-control py-2 border-right-0 border" type="search" value="search"
-                id="example-search-input">
-              <span class="input-group-append">
-                <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
-              </span>
-            </div>
+        <div class="row justify-content-end p-3">
+          <div class="col-md-5">
+            <!-- STUB Search bar -->
+            <!-- FIXME -->
+            <input @click="search()" v-model="message" placeholder="Search" /> s
           </div>
           <div class="col-md-2">
-            <!-- LOGIN COMPONENT HERE -->
+            <!-- STUB LOGIN COMPONENT HERE -->
             <div class="user-icon">
               <Login />
             </div>
           </div>
         </div>
-        <!-- Banner title and paragraphs -->
+        <!-- STUB Banner title and paragraphs -->
         <div class="banner-content text-center pb-2">
-          <h1 class="All-Spice">Your Website Title</h1>
-          <p class="text-MochaSlate">Your paragraph 1</p>
-          <p class="text-MochaSlate">Your paragraph 2</p>
+          <div class="blurred-shape">
+            <img alt="logo" src="../assets/img/asHoriLogoLighTxtShadow.svg" height="200"
+              class="mb-4 smscreenoverflow large-screen" />
+            <!-- <img alt="logo" src="../assets/img/asHoriLogoDrkTxtShadow.svg" height="200"
+              class="mb-4 smscreenoverflow small-screen" /> -->
+          </div>
         </div>
       </div>
 
@@ -43,10 +42,16 @@
 </template>
 
 <script>
+// FIXME
+// import Login from '../src/components/Login.vue';
+// import Navbar from './components/Navbar.vue';
+
 export default {
   setup() {
     return {}
-  }
+  },
+  // FIXME Login ADD TO COMPONENTS
+  // components: { Login, Navbar },
 }
 </script>
 
@@ -55,6 +60,12 @@ export default {
 .shadow {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   /* Adjust the values as needed */
+}
+
+.smscreenoverflow {
+  object-fit: contain;
+  object-position: center center;
+  max-width: 80%;
 }
 
 .bannerImg {
@@ -68,11 +79,45 @@ export default {
   border-radius: 10px !important;
 }
 
+// /* Media query for screens below 600px */
+// @media screen and (max-width: 599px) {
+//   .large-screen {
+//     display: none;
+//   }
+
+//   .small-screen {
+//     display: block;
+//   }
+// }
+
+
+
+// /* Media query for screens below 600px */
+// @media screen and (max-width: 599px) {
+//   .bannerImg {
+//     background-image: url("src/assets/img/spoons.jpg");
+//   }
+// }
 
 /* Media query for screens below 600px */
-@media screen and (max-width: 599px) {
-  .bannerImg {
-    background-image: url("src/assets/img/spoons.jpg");
-  }
-}
+// @media screen and (max-width: 599px) {
+
+
+// .blurred-shape {
+//   position: relative;
+//   display: inline-block;
+//   filter: blur(10px);
+//   /* Adjust the blur radius as needed */
+//   background-color: rgba(255, 255, 255, 0.8);
+//   /* Adjust the color and opacity as needed */
+//   border-radius: 50%;
+//   /* Creates a circular shape */
+//   width: 220px;
+//   /* Adjust the width and height to match the logo size */
+//   height: 220px;
+//   margin: 0 auto;
+//   /* Center the shape */
+//   z-index: -1;
+//   /* Place it behind the content */
+// }
 </style>

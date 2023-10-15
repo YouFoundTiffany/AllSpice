@@ -12,6 +12,7 @@
     --Nutmeg: #917164;
     --UltraDrkNutmeg: #251c1a;
     --MochaSlate: #AD8174;
+    --LghtMochaSlate: #f7e5e0;
 }
 
 /* Background colors utility classes */
@@ -39,6 +40,10 @@
     background-color: var(--MochaSlate) !important;
 }
 
+.bg-LghtMochaSlate {
+    background-color: var(--LghtMochaSlate) !important;
+}
+
 /* Text colors utility classes */
 .text-Coral {
     color: var(--Coral) !important;
@@ -62,6 +67,10 @@
 
 .text-MochaSlate {
     color: var(--MochaSlate) !important;
+}
+
+.text-LghtMochaSlate {
+    color: var(--LghtMochaSlate) !important;
 }
 
 .gradient-vertical {

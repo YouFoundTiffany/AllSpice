@@ -5,15 +5,15 @@
   <main>
     <router-view />
   </main>
-  <footer class="bg-dark text-light">
-    Made with 💖 by CodeWorks
+  <footer class="bg-Nutmeg footHeight">
+    <img alt="logo" src="./assets/img/asLogoOnlyShadow.svg" height="25" />
   </footer>
 </template>
 
 <script>
 import { computed } from 'vue'
 import { AppState } from './AppState'
-import Navbar from './components/Navbar.vue'
+// import Navbar from './components/Navbar.vue'
 
 export default {
   setup() {
@@ -21,7 +21,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  // components: { Navbar }
 }
 </script>
 <style lang="scss">
