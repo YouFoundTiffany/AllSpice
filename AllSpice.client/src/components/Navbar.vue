@@ -1,15 +1,21 @@
 <template>
   <nav class="navbar navbar-expand-lg px-3 Lora bg-Vermillion navCorners">
-    <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/asLogoOnlyShadow.svg" height="55" />
-      </div>
-    </router-link>
+    <!-- <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }"> -->
+    <div class="d-flex flex-column align-items-center">
+      <img alt="logo" src="../assets/img/asLogoOnlyShadow.svg" height="55" />
+    </div>
+    <!-- </router-link> -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
       aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
+      <!-- STUB filter buttons inserted into navbar -->
+      <p @click="filterBy = ''">All</p>
+      <p @click="filterBy = 'favorites'">Favorites</p>
+
+      <!-- STUB filter buttons inserted into navbar -->
+      <!-- NOTE removed PAGE LINKS AS NOT NEEDED -->
       <!-- <ul class="navbar-nav me-auto">
         <li class="">
           <router-link :to="{ name: 'About' }" class="btn txt-LghtMochaSlate lighten-30 selectable lghtnavbar-text">

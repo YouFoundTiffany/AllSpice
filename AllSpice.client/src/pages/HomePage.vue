@@ -8,11 +8,18 @@
           <div class="col-md-5">
             <!-- STUB Search bar -->
             <!-- FIXME -->
-            <input @click="search()" v-model="message" placeholder="Search" /> s
+            <form @submit.prevent="getFavorites()" action="">
+              <!-- FIXME v-model="editable.query" add back in when ready -->
+              <input @click="search()" placeholder="Search" id="searchBar" type="text" required minlength="2"
+                class="w-50" />
+              <button class="btn bg-RussianGreen" type="submit">
+                <i class="mdi mdi-magnify t"></i>
+              </button>
+            </form>
           </div>
           <div class="col-md-2">
             <!-- STUB LOGIN COMPONENT HERE -->
-            <div class="user-icon">
+            <div class="user-icon bg-Nutmeg rounded text-center ">
               <Login />
             </div>
           </div>
@@ -31,17 +38,29 @@
     </section>
 
     <!-- Navbar section -->
-    <div class="container pt-2">
-      <section class="row d-flex justify-content-center" style="margin-top: -40px;"> <!-- Adjust the margin-top value -->
-        <div class="col-6">
-          <Navbar class="shadow" />
+    <section class="mt-4">
+      <div class="container">
+        <div class="row justify-content-center" style="margin-top: -50px;">
+          <div class="col-6 d-flex justify-content-between">
+            <button class="col-5 btn btn-outline-light bg-Vermillion" @click="filterBy = ''">All</button>
+            <button class="col-5 btn btn-outline-light bg-Vermillion" @click="filterBy = 'favorites'">Favorites</button>
+          </div>
         </div>
+      </div>
+    </section>
+    <!-- NOTE removed as it isn't needed at this time, added the filter buttons in its place. -->
+    <!-- <Navbar class="shadow" /> -->
+    <!-- </div>
       </section>
-    </div>
+    </div> -->
   </div>
   <!-- STUB RECIPE CARDS -->
-  <!-- {{ recipe }} -->
+  <section class="container">
+    <div class="row">
+      <!-- {{ recipe }} -->
 
+    </div>
+  </section>
   <!-- STUB RECIPE CARDS -->
 </template>
 
@@ -65,6 +84,7 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   /* Adjust the values as needed */
 }
+
 
 .smscreenoverflow {
   object-fit: contain;
