@@ -10,13 +10,13 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto">
+      <!-- <ul class="navbar-nav me-auto">
         <li class="">
           <router-link :to="{ name: 'About' }" class="btn txt-LghtMochaSlate lighten-30 selectable lghtnavbar-text">
             About
           </router-link>
         </li>
-      </ul>
+      </ul> -->
       <!-- NOTE MOVED THIS TO BANNER IMAGE -->
       <!-- <div class="p-1">
         <div class="input-group">

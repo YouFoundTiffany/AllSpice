@@ -41,6 +41,8 @@
   </div>
   <!-- STUB RECIPE CARDS -->
   <!-- {{ recipe }} -->
+
+  <!-- STUB RECIPE CARDS -->
 </template>
 
 <script>
