@@ -39,6 +39,8 @@
       </section>
     </div>
   </div>
+  <!-- STUB RECIPE CARDS -->
+  <!-- {{ recipe }} -->
 </template>
 
 <script>
