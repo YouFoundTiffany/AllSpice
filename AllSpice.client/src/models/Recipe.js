@@ -1,11 +1,14 @@
 
-
-
-export const RecipeSchema = new Schema({
-    title: { type: String, required: true, maxLength: 75, minLength: 3 },
-    coverImg: { type: String, required: true, maxLength: 250, minLength: 3 },
-    category: { type: String, enum: ['cats', 'dogs', 'games', 'gachamon', 'animals', 'misc'], required: true, default: 'misc' },
-    creatorId: { type: Schema.Types.ObjectId, required: true, ref: 'Account' }
-    archived: { type: Boolean, default: false },
-},
-    { timestamps: true, toJSON: { virtuals: true } })
+export class Recipe {
+    constructor(data) {
+        this.id = data.id
+        this.title = data.title
+        this.instructions = data.instructions
+        this.img = data.img
+        this.archived = data.archived
+        this.category = data.category
+        this.creatorId = data.creatorId
+        this.creator = data.creator
+        //   this.memberCount = data.memberCount
+    }
+}
