@@ -25,7 +25,7 @@ CREATE TABLE
     ) default charset utf8 COMMENT '';
 
 CREATE TABLE
-    IF NOT EXISTS ingredient(
+    IF NOT EXISTS ingredients(
         id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
         quantity VARCHAR(100) NOT NULL,

@@ -12,7 +12,7 @@ public class FavoritesController : ControllerBase
         _favoritesService = favoritesService;
         _auth0 = auth0;
     }
-
+    // Check
     [Authorize]
     [HttpPost]
     public async Task<ActionResult<Favorite>> CreateFavorite([FromBody] Favorite favoriteData)
@@ -20,7 +20,7 @@ public class FavoritesController : ControllerBase
         try
         {
             Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-            favoriteData.AccountId = userInfo.Id;
+            favoriteData.CreatorId = userInfo.Id;
             Favorite newFavorite = _favoritesService.CreateFavorite(favoriteData);
             return newFavorite;
         }
@@ -29,7 +29,20 @@ public class FavoritesController : ControllerBase
             return BadRequest(error.Message);
         }
     }
-
+    [HttpGet("{favoriteId}")]
+    public ActionResult<Favorite> GetFavoriteById(int favoriteId)
+    {
+        try
+        {
+            Favorite favorite = _favoritesService.GetFavoriteById(favoriteId);
+            return Ok(favorite);
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+    // Check
     [Authorize]
     [HttpDelete("{favoriteId}")]
     public async Task<ActionResult<string>> DeleteFavorite(int favoriteId)

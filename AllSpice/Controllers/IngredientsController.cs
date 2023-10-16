@@ -23,18 +23,53 @@ public class IngredientsController : ControllerBase
             // ? newIngredient.Creator = userInfo;
             return newIngredient;
         }
-        catch (System.Exception)
+        catch (Exception error)
         {
-
-            throw;
+            return BadRequest(error.Message);
         }
+    }
 
-
+    [HttpGet]
+    public ActionResult<List<Ingredient>> GetAllIngredients()
+    {
+        try
+        {
+            List<Ingredient> ingredients = _ingredientsService.GetAllIngredients();
+            return ingredients;
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
+    }
+    [HttpGet("{ingredientId}")]
+    public ActionResult<Ingredient> GetIngredientById(int ingredientId)
+    {
+        try
+        {
+            Ingredient ingredient = _ingredientsService.GetIngredientById(ingredientId);
+            return Ok(ingredient);
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
     }
 
 
+    [HttpDelete("{ingredientId}")]
+    public ActionResult<string> RemoveIngredient(int ingredientId)
+    {
+        try
+        {
+            Ingredient ingredient = _ingredientsService.RemoveIngredient(ingredientId);
 
+            return Ok($"{ingredient} was deleted");
+        }
+        catch (Exception error)
+        {
+            return BadRequest(error.Message);
+        }
 
-
-
+    }
 }

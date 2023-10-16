@@ -83,4 +83,5 @@ export default {
     color: #fff;
     /* Adjust the text color */
     text-align: center;
-}</style>
+}
+</style>

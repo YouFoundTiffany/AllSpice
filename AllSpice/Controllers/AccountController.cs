@@ -30,6 +30,8 @@ public class AccountController : ControllerBase
     }
   }
 
+
+  // NOTE see on Favorites Repo and Service
   [Authorize]
   [HttpGet("favorites")]
   public async Task<ActionResult<List<RecipeFavoriteViewModel>>> GetRecipesByAccount()

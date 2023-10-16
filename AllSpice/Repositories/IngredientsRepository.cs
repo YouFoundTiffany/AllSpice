@@ -15,7 +15,6 @@ public class IngredientsRepository
                 (name, quantity, recipeId, creatorId)
             VALUES
                 (@name, @quantity, @recipeId, @creatorId);
-
             SELECT ing.*, act.*
             FROM ingredients ing
             JOIN accounts act ON act.id = @creatorId
@@ -29,12 +28,25 @@ public class IngredientsRepository
         return newIngredient;
     }
 
+    internal List<Ingredient> GetAllIngredients()
+    {
+        string sql = @"
+        SELECT ing.*, act.*
+        FROM ingredients ing
+        JOIN accounts act ON act.id = ing.creatorId;";
 
+        List<Ingredient> ingredients = _db.Query<Ingredient, Account, Ingredient>(sql, (ingredient, account) =>
+        {
+            ingredient.Creator = account;
+            return ingredient;
+        }).ToList();
+        return ingredients;
+    }
     internal List<Ingredient> GetIngredientsByRecipeId(int recipeId)
     {
         string sql = @"
         SELECT ing.*, act.*
-        FROM ingredient ing
+        FROM ingredients ing
         JOIN accounts act ON act.id = ing.creatorId
         WHERE recipeId = @recipeId;";
         List<Ingredient> ingredients = _db.Query<Ingredient, Account, Ingredient>(sql, (ingredient, account) =>
@@ -43,5 +55,20 @@ public class IngredientsRepository
             return ingredient;
         }, new { recipeId }).ToList();
         return ingredients;
+    }
+
+    internal Ingredient GetIngredientById(int ingredientId)
+    {
+
+        string sql = "SELECT * FROM ingredients WHERE id = @ingredientId;";
+        Ingredient ingredient = _db.QueryFirstOrDefault<Ingredient>(sql, new { ingredientId });
+
+        return ingredient;
+
+    }
+    internal void RemoveIngredient(int ingredientId)
+    {
+        string sql = "DELETE FROM ingredients WHERE id = @ingredientId LIMIT 1;";
+        _db.Execute(sql, new { ingredientId });
     }
 }

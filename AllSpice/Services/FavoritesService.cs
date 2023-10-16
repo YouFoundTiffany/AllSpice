@@ -8,26 +8,27 @@ public class FavoritesService
     {
         _repo = repo;
     }
-
+    // Check
     internal Favorite CreateFavorite(Favorite favoriteData)
     {
         Favorite newFavorite = _repo.CreateFavorite(favoriteData);
         return newFavorite;
     }
 
-    internal void DeleteFavorite(int favoriteId, string userId)
+    internal Favorite GetFavoriteById(int favoriteId)
     {
-        Favorite foundFavorite = _repo.GetById(favoriteId);
-        if (foundFavorite == null) throw new Exception("Invalid Favorite Id");
-        if (foundFavorite.AccountId != userId) throw new Exception("Unauthorized");
-        int rows = _repo.DeleteFavorite(favoriteId);
-        if (rows > 1) throw new Exception("Something went wrong, less than");
-        if (rows > 1) throw new Exception("Something went wrong, greater than");
+        Favorite favorite = _repo.GetFavoriteById(favoriteId);
+        if (favorite == null)
+        {
+            throw new Exception($"{favoriteId} is not a valid ID");
+        }
+        return favorite;
     }
 
-    internal List<RecipeFavoriteViewModel> GetRecipesByAccount(string accountId)
+    // NOTE see on Favorites Repo and Account Controller
+    internal List<RecipeFavoriteViewModel> GetRecipesByAccount(string creatorId)
     {
-        List<RecipeFavoriteViewModel> myRecipes = _repo.GetRecipesByAccount(accountId);
+        List<RecipeFavoriteViewModel> myRecipes = _repo.GetRecipesByAccount(creatorId);
         return myRecipes;
     }
 
@@ -40,5 +41,14 @@ public class FavoritesService
     }
 
 
-
+    // Check
+    internal void DeleteFavorite(int favoriteId, string userId)
+    {
+        Favorite foundFavorite = _repo.GetFavoriteById(favoriteId);
+        if (foundFavorite == null) throw new Exception("Invalid Favorite Id");
+        if (foundFavorite.CreatorId != userId) throw new Exception("Unauthorized");
+        int rows = _repo.DeleteFavorite(favoriteId);
+        if (rows > 1) throw new Exception("Something went wrong, less than");
+        if (rows > 1) throw new Exception("Something went wrong, greater than");
+    }
 }
