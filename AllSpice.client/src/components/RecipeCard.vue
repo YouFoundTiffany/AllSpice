@@ -1,46 +1,148 @@
 <template>
-    <div class="card mb-2 square-card">
-        <div class="card-img-wrapper">
-            <img class="img-fluid" :src="recipe.Img" alt="">
-            <!-- Heart icon for favorites -->
-            <i class="mdi mdi-heart text-danger" v-if="recipe.favorite"></i>
-        </div>
-        <div class="card-body">
-            <!-- Category pill shape with blur background -->
-            <div class="category-pill">
-                <span>{{ recipe.category }}</span>
+    <div class="container ">
+        <!-- TODO add router link -->
+        <div class="row">
+            <!-- SECTION Recipe details -->
+            <div v-if="recipeProp" class="col-md-6 card">
+                <!-- {{ recipeProp }} -->
+                <div class="mb-2">
+                    <img :src="recipeProp.img" :alt="recipeProp.title" class="coverImg rounded light-shadow">
+                    <div>
+
+                        <div class="rounded bg-warning p-1 light-shadow">
+                            <p class="">
+                                {{ recipeProp.title }}
+                            </p>
+                            <p class="fs-4">
+                                by: {{ recipeProp.creator.name }}
+                            </p>
+                        </div>
+                        <div class="pt-3 ">
+                            <!-- TODO disable or HIDE button if not recipe creator OR favorite -->
+                            <button v-if="recipeProp.creatorId == account.id || isfavorite"
+                                :disabled="recipeProp.archived == true" data-bs-toggle="modal"
+                                data-bs-target="#createIngredientModal" class="picture-btn fs-5"><i
+                                    class="mdi mdi-plus-box"></i> add
+                                Ingredient</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex pt-2">
+                    <div class="rounded bg-info light-shadow p-2">
+                        <h2>Favorites: {{ recipeProp.memberCount }}</h2>
+                    </div>
+                    <button v-if="!isFavorite" class="btn btn-secondary" @click="makeFavorite()">Favorite <i
+                            class="mdi mdi-heart"></i></button>
+                    <button v-else class="btn btn-secondary" @click="unmakeFavorite()">Un-Favorite <i
+                            class="mdi mdi-heart-broken"></i></button>
+                </div>
             </div>
-            <!-- Blurred title at the bottom of the card -->
-            <h3 class="card-title text-UltraDrkNutmeg">
-                <span class="blurred-text">{{ recipe.title }}</span>
-            </h3>
-            <!-- Button to view more details -->
-            <button class="btn btn-warning w-100" data-bs-toggle="modal" data-bs-target="#projectModal"
-                @click="addToFavorites()">
-                See Project
-            </button>
+            <!-- SECTION Recip pictures -->
+            <div class="col-md-9">
+                <div class="row">
+                    <!-- REVIEW these two lines were how we created a 'dummy' for-loop to test our styling -->
+                    <!-- <div class="col-3 p-2" v-for="n in 10"> -->
+                    <!-- <img class="recip-picture" :src="pictures[0].imgUrl" alt=""> -->
+                    <!-- <div class="col-3 p-2" v-for="p in pictures"> -->
+                    <!-- below was actual final element -->
+                    <!-- <img class="recipe-picture" :src="p.imgUrl" alt=""> -->
+                    <!-- </div> -->
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-export default {
-    props: {
-        recipe: Object,
-    },
-    setup(props) {
-        const addToFavorites = () => {
-            // Implement your addToFavorites logic here
-        };
+import { computed } from 'vue';
+import { Recipe } from '../models/Recipe.js';
+import { AppState } from '../AppState.js';
+import { Ingredient } from '../models/Ingredient.js';
+import { Favorite } from '../models/Favorite.js';
+import Pop from '../utils/Pop.js';
+import { recipesService } from '../services/RecipesService.js';
+import { ingredientsService } from '../services/IngredientsService.js';
+import { favoritesService } from '../services/FavoritesService.js';
 
-        return {
-            addToFavorites,
-        };
+
+
+export default {
+    // STUB Props
+    props: {
+        recipeProp: { type: Object, required: true }, ingredientsProp: { type: Array, required: true }, favoritesProp: { type: Array, required: true }
     },
-};
+    // STUB Get Ingredients
+    async getIngredients() {
+        try {
+            await ingredientsService.getIngredients();
+        } catch (error) {
+            Pop.error(error);
+        }
+    },
+    // STUB Get Favorites
+    async getFavorites() {
+        try {
+            await favoritesService.getFavorites();
+        } catch (error) {
+            Pop.error(error);
+        }
+    },
+
+    // STUB SETUP!
+    setup(props) {
+        return {
+            // STUB Computeds
+            user: computed(() => AppState.user),
+            account: computed(() => AppState.account),
+            isFavorite: computed(() => AppState.activeRecipeFavorites.find(favorite => favorite.accountId == AppState.account.id)),
+
+            // STUB Active Recipe
+            async archiveRecipe() {
+                try {
+                    const recipeToArchive = await Pop.confirm(`Are you sure you want to archive the ${props.recipeProp.title}?`)
+
+                    if (!recipeToArchive) {
+                        return
+                    }
+
+                    const recipeId = props.recipeProp.id
+                    // logger.log(recipeId)
+                    await recipesService.archiveRecipe(recipeId)
+                } catch (error) {
+                    Pop.error(error.message)
+                }
+            },
+            // STUB Set Recipe to Edit
+            setRecipeToEdit() {
+                const recipeToEdit = props.recipeProp
+                recipesService.setRecipeToEdit(recipeToEdit)
+            }
+
+
+
+        }
+    }
+
+}
+
+
+
+
 </script>
 
 <style scoped>
+.coverImg {
+    max-height: 170px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    grid-column: 1/1;
+    grid-row: 1/1;
+    height: 100%;
+    object-fit: cover;
+}
+
+
 .square-card {
     width: 200px;
     /* Adjust the card width as needed */
