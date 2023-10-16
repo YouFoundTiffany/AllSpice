@@ -30,7 +30,7 @@ public class RecipesController : ControllerBase
             Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
             recipeData.CreatorId = userInfo.Id;
             Recipe newRecipe = _recipesService.CreateRecipe(recipeData);
-            return newRecipe;
+            return Ok(newRecipe);
         }
         catch (Exception error)
         {
@@ -44,7 +44,7 @@ public class RecipesController : ControllerBase
         try
         {
             List<Recipe> recipes = _recipesService.GetAllRecipes();
-            return recipes;
+            return Ok(recipes);
         }
         catch (Exception error)
         {
@@ -60,7 +60,7 @@ public class RecipesController : ControllerBase
         try
         {
             Recipe recipe = _recipesService.GetRecipeById(recipeId);
-            return recipe;
+            return Ok(recipe);
         }
         catch (Exception error)
         {
@@ -76,7 +76,7 @@ public class RecipesController : ControllerBase
         try
         {
             List<Ingredient> ingredients = _ingredientsService.GetIngredientsByRecipeId(recipeId);
-            return ingredients;
+            return Ok(ingredients);
         }
         catch (Exception error)
         {
@@ -90,7 +90,7 @@ public class RecipesController : ControllerBase
         try
         {
             List<AccountFavoriteViewModel> favorites = _favoritesService.GetFavoritesByRecipeId(recipeId);
-            return favorites;
+            return Ok(favorites);
         }
         catch (Exception error)
         {
@@ -121,7 +121,7 @@ public class RecipesController : ControllerBase
         {
             Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
             Recipe recipe = _recipesService.ArchiveRecipe(recipeId, userInfo.Id);
-            return recipe;
+            return Ok(recipe);
         }
         catch (Exception error)
         {

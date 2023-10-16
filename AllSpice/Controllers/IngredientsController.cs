@@ -21,7 +21,7 @@ public class IngredientsController : ControllerBase
             ingredientData.CreatorId = userInfo.Id;
             Ingredient newIngredient = _ingredientsService.CreateIngredient(ingredientData);
             // ? newIngredient.Creator = userInfo;
-            return newIngredient;
+            return Ok(newIngredient);
         }
         catch (Exception error)
         {
@@ -35,7 +35,7 @@ public class IngredientsController : ControllerBase
         try
         {
             List<Ingredient> ingredients = _ingredientsService.GetAllIngredients();
-            return ingredients;
+            return Ok(ingredients);
         }
         catch (Exception error)
         {
