@@ -13,9 +13,9 @@ public class RecipesRepository
 
         string sql = @"
             INSERT INTO recipes
-                (title, instructions, img, category, creatorId)
+                (title, instructions, img, category, creatorId, archived)
             VALUES
-                (@Title, @Instructions, @Img, @Category, @CreatorId);
+                (@Title, @Instructions, @Img, @Category, @CreatorId, @Archived);
 
             SELECT act.*, rec.*
             FROM recipes rec
@@ -67,10 +67,11 @@ public class RecipesRepository
         title = @Title,
         instructions = @Instructions,
         img = @Img,
-        category = @Category
+        category = @Category,
+        archived = @Archived
         WHERE id = @Id
         LIMIT 1;
-        HERE id=@Id
+        SELECT * FROM recipes WHERE id = @Id
         ;";
 
         // NOTE From GregsList - we run QueryFirstOrDefault here so that we update the recip and then select that recipe so that we have proper updatedAt timestamps

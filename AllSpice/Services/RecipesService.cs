@@ -26,7 +26,7 @@ public class RecipesService
         return foundRecipe;
     }
 
-    // STUB Edit Recipe
+    // STUB Edit Recipe PUT request
     internal Recipe UpdateRecipe(int recipeId, Recipe recipeData)
     {
         Recipe originalRecipe = GetRecipeById(recipeId);
