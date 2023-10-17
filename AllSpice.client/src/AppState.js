@@ -28,5 +28,4 @@ export const AppState = reactive({
 
   /**@type {Favorite[]} */
   activeRecipeFavorites: [],
-
 })

@@ -1,6 +1,5 @@
 import { AppState } from "../AppState.js"
 import { Favorite } from "../models/Favorite.js"
-// FIXME re-import
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 
@@ -8,10 +7,16 @@ class FavoritesService {
     // STUB Create Favorite
     async createFavorite(favoriteData) {
         const response = await api.post('api/favorites', favoriteData)
-        logger.log(response.data)
-        const newFavorite = new Favorite(response.data)
-        AppState.favorites.unshift(newFavorite)
-        return newFavorite
+        logger.log('[CREATED FAVORITE]', response.data)
+        AppState.activeRecipeFavorites.push(new Favorite(response.data))
+    }
+
+    // STUB Remove Favorite
+    async removeFavorite(favoriteId) {
+        const response = await api.delete(`api/favorites/${favoriteId}`)
+        logger.log('[REMOVE FAVORITE]', response.data)
+        let indexToRemove = AppState.activeAlbumCollaborators.findIndex(favorite => favorite.id == favoriteId)
+        AppState.activeRecipeFavorites.splice(indexToRemove, 1)
     }
 
     // STUB Get Favorite

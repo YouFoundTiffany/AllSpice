@@ -6,23 +6,23 @@
       <div class="col-12 bannerImg shadow">
         <!-- Search bar and user icon row -->
         <div class="row justify-content-end p-3">
-          <div class="col-md-5">
+          <div class="col-md-5 m-0">
 
             <!-- STUB Search bar -->
             <!-- TODO -->
             <form @submit.prevent="getFavorites()" action="">
               <!-- TODO v-model="editable.query" add back in when ready -->
               <input @click="search()" placeholder="Search" id="searchBar" type="text" required minlength="2"
-                class="w-50" />
+                class="w-50 m-0 p-0 text-bottom" style="height: 37px;" />
               <button class="btn bg-RussianGreen" type="submit">
-                <i class="mdi mdi-magnify t"></i>
+                <i class="mdi mdi-magnify m-0 p-0"></i>
               </button>
             </form>
           </div>
           <div class="col-md-2">
 
             <!-- STUB LOGIN COMPONENT HERE -->
-            <div class="user-icon bg-Nutmeg rounded text-center ">
+            <div class="user-icon bg-Nutmeg rounded text-center">
               <Login />
             </div>
           </div>
@@ -44,24 +44,32 @@
         <div class="row justify-content-center" style="margin-top: -50px;">
           <div class="col-6 d-flex justify-content-between">
             <button class="col-5 btn btn-outline-light bg-Vermillion" @click="filterBy = ''">All</button>
-            <button class="col-5 btn btn-outline-light bg-Vermillion" @click="filterBy = 'favorites'">Favorites</button>
+            <button class="col-5 btn btn-outline-light bg-Vermillion" @click="filterBy = 'favorites'">Favs</button>
           </div>
         </div>
       </div>
     </section>
   </div>
-  <!-- STUB CREATE RECIPE COLLAPSE -->
-  <div class="container ">
-    <section class="row" v-if="user.isAuthenticated">
-      <CultForm />
-    </section>
+
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        ...
+      </div>
+    </div>
   </div>
+  <!-- STUB CREATE RECIPE COLLAPSE -->
+  <!-- <div class="container "> -->
+  <!-- <div class="row" v-if="user.isAuthenticated">
+    <CultForm />
+  </div>
+  </div> -->
   <!-- STUB RECIPE CARDS -->
-  <section class="container">
+  <section class="container-fluid">
     <div class="row">
-      <div v-for="recipe in recipes" :key="recipe.id" class="col-12 mb-4">
+      <div v-for="recipe in recipes" :key="recipe.id" class="col-12 col-md-3 mb-3">
         <RecipeCard :recipeProp="recipe" :ingredientsProp="ingredients" :favoritesProp="favorites" />
-        <!-- {{ recipe }} -->
       </div>
     </div>
   </section>
