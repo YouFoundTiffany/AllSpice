@@ -45,12 +45,13 @@ class RecipesService {
         AppState.activeAlbumCollaborators = response.data.map(favorite => new Favorite(favorite))
     }
 
-    // STUB Delete Archive Recipe
+    // STUB Archive Archive Recipe
     async archiveRecipe(recipeId) {
         const response = await api.delete(`api/recipes/${recipeId}`)
         logger.log('[DELETED RECIPE]', response.data)
-        // FIXME NEED TO ADD TO OR MAKE WTIH A PUSH OR SOMETHNG
+        // FIXME ?NEED TO ADD TO OR MAKE WTIH A PUSH OR SOMETHNG
     }
+
 
 
 }

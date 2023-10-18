@@ -130,4 +130,19 @@ public class RecipesController : ControllerBase
     }
 
 
+    // [HttpDelete("{recipeId}")]
+    // public ActionResult<string> RemoveRecipe(int recipeId)
+    // {
+    //     try
+    //     {
+    //         Recipe recipe = _recipesService.RemoveRecipe(recipeId);
+
+    //         return Ok($"{recipe.Title}was deleted");
+    //     }
+    //     catch (Exception error)
+    //     {
+    //         return BadRequest(error.Message);
+    //     }
+    // }
+
 }

@@ -30,7 +30,7 @@ CREATE TABLE
         name VARCHAR(100) NOT NULL,
         quantity VARCHAR(100) NOT NULL,
         recipeId INT NOT NULL,
-        creatorId VARCHAR(255) NOT NULL,
+        accountId VARCHAR(255) NOT NULL,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
         FOREIGN KEY (recipeId) REFERENCES recipes (id) ON DELETE CASCADE,

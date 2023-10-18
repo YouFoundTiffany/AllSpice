@@ -13,6 +13,13 @@ class FavoritesService {
 
     }
 
+    // STUB Get All Favorites
+    async getFavorites() {
+        const response = await api.get('api/favorites')
+        logger.log('[GOT FAVORITES]', response.data)
+        AppState.favorites = response.data.map(favorite => new Favorite(favorite))
+    }
+
     // STUB Remove Favorite
     async removeFavorite(favoriteId) {
         const response = await api.delete(`api/favorites/${favoriteId}`)
@@ -25,7 +32,8 @@ class FavoritesService {
     async getMyFavorites() {
         const response = await api.get('account/favorites')
         logger.log('[GOT FAVORITES]', response.data)
-        AppState.myFavorites = response.data.map(favorite => new Favorite(favorite))
+        AppState.myFavorites = response.data
+        // .map(favorite => new Favorite(favorite))
     }
 
     // STUB Delete Favorite

@@ -1,17 +1,17 @@
 <template>
-    <div class="container-fluid col-12" style="height: 347px">
+    <div class="container-fluid col-12" style="height: 330px">
         <div class="row">
             <div v-if="recipeProp" class="col-md-12 card elevation-3 p-0">
                 <div class="mb-2">
                     <img :src="recipeProp.img" :alt="recipeProp.title" class="coverImg light-shadow">
                     <div>
                         <div class="bg-MochaSlate p-1 txt-LghtMochaSlate text-center">
-                            <h5 class="">
+                            <h6 class="p-1 m-0 text-truncate">
                                 {{ recipeProp.title }}
-                            </h5>
-                            <p class="fs-6 p-2 ">
+                            </h6>
+                            <h6 class="p-1 m-0">
                                 Category: {{ recipeProp.category }}
-                            </p>
+                            </h6>
                         </div>
                     </div>
                 </div>
@@ -98,22 +98,26 @@
                     </div>
                     <!-- STUB LOWER OF BUTTONS -->
                     <!-- v-show -->
-                    <button @click="editRecipe(recipeProp.id)"
-                        class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">
-                        Edit Recipe
-                    </button>
-
+                    <div>
+                        <button v-if="recipeProp.creatorId == account.id && user.isAuthenticated"
+                            @click="editRecipe(recipeProp.id)"
+                            class="btn rounded-pill bg-RussianGreen m-1 p-1 align-items-center border-dark">
+                            Edit Recipe
+                        </button>
+                    </div>
 
                     <!-- STUB FAV AND UN-FAV BUTTONS -->
-                    <button v-if="!myFavorites && user.isAuthenticated" @click="createFavorite" role="button"
-                        class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">Favorite<i
-                            class=""></i></button>
-                    <button v-else-if="myFavorites && user.isAuthenticated" @click="removeFavorite" role="button"
-                        class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">Un-Fav<i
+
+                    <button v-if="isFavorite && user.isAuthenticated" @click="createFavorite" role="button"
+                        class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">Favorite<i class=""></i>
+                    </button>
+
+                    <button v-else-if="!isFavorite && user.isAuthenticated" @click="removeFavorite" role="button"
+                        class="btn rounded-pill bg-Coral m-1 align-items-center border-dark">Un-Fav<i
                             class="mdi mdi-silverware-spoon"></i></button>
+
                     <button v-else disabled role="button" class="btn btn-secondary m-1 bg-RussianGreen border-dark"
-                        title="Log In To Add Favorite Recipes">Log In To Add Favorite Recipes<i
-                            class="mdi mdi-broken-heart"></i></button>
+                        title="Log In To Add Favorite Recipes">Log In<i class="mdi mdi-broken-heart"></i></button>
                 </div>
             </div>
         </div>
@@ -126,11 +130,7 @@ import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
 import { recipesService } from '../services/RecipesService.js';
 import { ingredientsService } from '../services/IngredientsService.js';
-import { accountService } from '../services/AccountService.js';
 import { favoritesService } from '../services/FavoritesService.js';
-// import { Ingredient } from '../models/Ingredient.js';
-// import { Favorite } from '../models/Favorite.js';
-// import { Recipe } from '../models/Recipe.js';
 import { logger } from '../utils/Logger';
 import { useRoute } from 'vue-router';
 import { Modal } from 'bootstrap';
@@ -138,9 +138,8 @@ import { Modal } from 'bootstrap';
 
 export default {
     // STUB Props
-    // favoritesProp: { type: Array, required: false }
     props: {
-        recipeProp: { type: Object, required: true }, myFavorites: { type: Object, required: false }
+        recipeProp: { type: Object, required: true }
     },
     // STUB Get Ingredients
     async getIngredients() {
@@ -150,7 +149,7 @@ export default {
             Pop.error(error);
         }
     },
-    // STUB Get Favorites
+    // STUB Get All Favorites
     async getFavorites() {
         try {
             await favoritesService.getFavorites();
@@ -158,13 +157,13 @@ export default {
             Pop.error(error);
         }
     },
-    async getMyFavorites() {
-        try {
-            await accountService.getMyFavorites()
-        } catch (error) {
-            Pop.error(error);
-        }
-    },
+    // async getMyFavorites() {
+    //     try {
+    //         await accountService.getMyFavorites()
+    //     } catch (error) {
+    //         Pop.error(error);
+    //     }
+    // },
 
 
     // STUB SETUP!
@@ -172,42 +171,32 @@ export default {
         const route = useRoute();
         const ingredientData = ref({})
         const recipeToArchive = ref({})
+        // const myFavorites = ref({})
         onMounted(() => {
-            // getFavorites();
-            // getMyFavorites();
+            // this.getFavorites()
         })
 
 
         // STUB Return
         return {
             // STUB Computeds
-            appState: computed(() => AppState),
+            // AppState: computed(() => AppState),
             ingredientData,
             recipeToArchive,
             showModal: false,
             user: computed(() => AppState.user),
             account: computed(() => AppState.account),
-            favorites: computed(() => AppState.myFavorites),
-            isFavorites: computed(() => AppState.activeRecipeFavorites),
-            isFavorite: computed(() => AppState.activeRecipeFavorites.find(favorite => favorite.accountId == AppState.account.id)),
+            myFavorites: computed(() => AppState.myFavorites),
             activeRecipeFavorites: (() => AppState.activeRecipeFavorites),
-            getMyFavorites: computed(() => AppState.activeRecipeFavorites.find(favorite => favorite.accountId == AppState.account.id)),
-            myFavorites: computed(() => {
-                if (AppState.user.isAuthenticated) {
-                    const favoriteIds = AppState.myFavorites.map(favorite => favorite.recipeId);
-                    return favoriteIds.includes(props.recipeProp.id);
-                }
-                return false; // If the user is not authenticated, it's not a favorite.
-            }),
-            // myFavorites: computed(() => AppState.myFavorites),
+            isFavorite: computed(() => AppState.myFavorites.find(favorite => favorite.id == props.recipeProp.id)),
+
 
             // STUB Create Ingredient
             async CreateIngredient() {
                 logger.log('click the button?')
                 try {
                     logger.log(ingredientData.value, AppState.activeRecipe.id, route.params.recipeId)
-                    ingredientData.value.recipeId = route.params.recipeId // assigns the RECIPE's id to the ingredientData
-                    // NOTE we need to send ONE object with all the data included on it. not separate pieces of info
+                    ingredientData.value.recipeId = route.params.recipeId
                     await ingredientsService.CreateIngredient(ingredientData.value)
                     Pop.toast('Added picture', 'success', 'center-end')
                     ingredientData.value = {}
@@ -270,8 +259,6 @@ export default {
             },
             toggleModal(recipeId) {
                 Modal.getOrCreateInstance('#detailsModal').show()
-
-                // this.showModal = !this.showModal;
             },
 
         }

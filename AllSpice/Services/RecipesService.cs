@@ -40,6 +40,7 @@ public class RecipesService
         return recipe;
     }
 
+    // STUB Archive Recipe
     internal Recipe ArchiveRecipe(int recipeId, string userId)
     {
         Recipe recipe = this.GetRecipeById(recipeId);
@@ -49,7 +50,14 @@ public class RecipesService
         return recipe;
     }
 
-
+    // // STUB Delete Recipe
+    // internal Recipe RemoveRecipe(int recipeId)
+    // {
+    //     // NOTE runs the null check for us before sending off the delete request
+    //     Recipe recipe = GetRecipeById(recipeId);
+    //     _repo.RemoveRecipe(recipeId);
+    //     return recipe;
+    // }
 
 
 }

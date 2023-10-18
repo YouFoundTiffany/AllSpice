@@ -14,7 +14,7 @@ public class FavoritesRepository
             INSERT INTO favorites
                 (accountId, recipeId)
             VALUES
-                (@account, @recipeId);
+                (@accountId, @recipeId);
             SELECT LAST_INSERT_ID();";
         int lastInsertId = _db.ExecuteScalar<int>(sql, favoriteData);
         favoriteData.Id = lastInsertId;
