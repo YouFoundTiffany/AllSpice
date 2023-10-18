@@ -6,22 +6,26 @@
       <div class="col-12 bannerImg shadow">
         <!-- Search bar and user icon row -->
         <div class="row justify-content-end p-3">
-          <div class="col-md-5 m-0">
+          <!-- <div class="col-md-5 m-0"> -->
+          <!-- STUB Search bar -->
+          <!-- <form @submit.prevent="searchRecipes" action=""> -->
+          <!-- TODO v-model="editable.query" add back in when ready -->
+          <!-- <form @submit.prevent="searchMovies" class="row">
+                <div class="col-12 input-group">
+                  <input v-model="searchTerm" type="text" class="form-control" placeholder="search movies">
+                  <button class="btn btn-primary"><i class="mdi mdi-magnify"></i></button>
+                </div>
+              </form> -->
+          <!-- <input @click="search()" placeholder="Search" id="searchBar" type="text" required minlength="2"
+              class="w-50 m-0 p-0 text-bottom rounded-start" style="height: 37px;" />
+            <button class="btn bg-RussianGreen" type="submit">
+              <i class="mdi mdi-magnify m-0 p-0"></i>
+            </button>
+            </form> -->
+          <!-- </div> -->
 
-            <!-- STUB Search bar -->
-            <!-- TODO -->
-            <form @submit.prevent="getFavorites()" action="">
-              <!-- TODO v-model="editable.query" add back in when ready -->
-              <input @click="search()" placeholder="Search" id="searchBar" type="text" required minlength="2"
-                class="w-50 m-0 p-0 text-bottom rounded-start" style="height: 37px;" />
-              <button class="btn bg-RussianGreen" type="submit">
-                <i class="mdi mdi-magnify m-0 p-0"></i>
-              </button>
-            </form>
-          </div>
+          <!-- STUB LOGIN COMPONENT HERE -->
           <div class="col-md-2">
-
-            <!-- STUB LOGIN COMPONENT HERE -->
             <div class="user-icon bg-Nutmeg rounded text-center col-md-2 col-6">
               <Login />
             </div>
@@ -38,14 +42,27 @@
       </div>
     </section>
 
-    <!-- STUB Filter Buttons section -->
+    <!-- STUB Filter Buttons Bar section -->
     <section class="my-4">
       <div class="container">
-        <div class="row justify-content-center" style="margin-top: -50px;">
-          <div class="col-6 d-flex justify-content-between">
-            <button class="col-5 btn btn-outline-light bg-Vermillion selectable" @click="filterBy = ''">All</button>
-            <button class="col-5 btn btn-outline-light bg-Vermillion selectable"
+        <div class="row" style="margin-top: -50px;">
+          <div class="col-12 d-flex justify-content-center">
+            <button class="col-md-2 col-6 btn btn-outline-light bg-Vermillion selectable"
+              @click="filterBy = ''">All</button>
+            <button class="col-md-2 col-6 btn btn-outline-light bg-Vermillion selectable"
               @click="filterBy = 'favorites'">Favs</button>
+          </div>
+          <div class="col-12 d-flex justify-content-center">
+            <button class="col-md-2 btn btn-outline-light bg-Vermillion selectable"
+              @click="filterBy = 'pastries'">Pastries</button>
+            <button class="col-md-2 btn btn-outline-light bg-Vermillion selectable"
+              @click="filterBy = 'candies'">Candies</button>
+            <button class="col-md-2 btn btn-outline-light bg-Vermillion selectable"
+              @click="filterBy = 'cookies'">Cookies</button>
+            <button class="col-md-2 btn btn-outline-light bg-Vermillion selectable" @click="filterBy = 'icecream'">Ice
+              Cream</button>
+            <button class="col-md-2 btn btn-outline-light bg-Vermillion selectable"
+              @click="filterBy = 'holiday'">Holiday</button>
           </div>
         </div>
       </div>
@@ -117,13 +134,16 @@ export default {
   // STUB SETUP
   setup() {
     // STUB Variables and OnMounteds
+    const ingredients = ref([]);//TESTING
+    const filterBy = ref('')
     const recipesProp = computed(() => AppState.recipes);
     const ingredientsProp = computed(() => AppState.ingredients);
     const favoritesProp = computed(() => AppState.favorites);
+    const recipe = ref(null);
     onMounted(() => {
       getRecipes();
-      // getFavorites();
       getIngredients();
+      // getFavorites();
       // getMyFavorites();
     })
 
@@ -166,25 +186,19 @@ export default {
     //     Pop.error(error);
     //   }
     // }
-    const recipe = ref(null);
     // STUB Returns
     return {
-
-
-      // NOTE SEE WEEK 7 latesummer23-postIt Home Page TiffTag
-      // filterBy,
-      // account: computed(() => AppState.account),
-      // TODO WHERE I WILL ADD FILTER
-      // recipes: computed(() => {
-      //   if (!filterBy.value) {
-      //     return AppState.recipes
-      //   } else {
-      //     return AppState.recipes.filter(recipe => recipe.category == filterBy.value)
-      //   }
-      // }),
+      filterBy,
+      recipes: computed(() => {
+        if (!filterBy.value) {
+          return AppState.recipes
+        } else {
+          return AppState.recipes.filter(recipe => recipe.category == filterBy.value)
+        }
+      }),
       user: computed(() => AppState.user),
       // myFavorites:computed(()=>AppState.myFavorites),
-      recipes: computed(() => AppState.recipes),
+      // recipes: computed(() => AppState.recipes),
       ingredients: computed(() => AppState.ingredients),
       isFavorite: computed(() => AppState.isFavorite),
       myFavorites: computed(() => AppState.myFavorites),

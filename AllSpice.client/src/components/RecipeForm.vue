@@ -7,8 +7,8 @@
         </div>
         <div class="mb-3">
             <label for="instructions" class="form-label">Instructions</label>
-            <input v-model="recipeData.instructions" required type="text" class="form-control" id="instructions"
-                placeholder="Instructions..." maxlength="1000" minlength="3">
+            <textarea v-model="recipeData.instructions" required type="text" class="form-control" id="instructions"
+                placeholder="Instructions..." maxlength="1000" minlength="3" rows="10"></textarea>
         </div>
         <div class="mb-3">
             <label for="coverImg" class="form-label">CoverImg</label>
@@ -89,7 +89,8 @@ export default {
                         Pop.toast('Recipe Created', 'success') // tells the user good job
                         resetForm() // resets the form
                         Modal.getOrCreateInstance('#recipeModal').hide() // closes the modal
-                        router.push({ name: 'Recipe Details', params: { recipeId: newRecipe.id } })
+                        // FIXME
+                        // router.push({ name: 'Recipe Details', params: { recipeId: newRecipe.id } })
                     } else {
                         // NOTE do the put request here
                         logger.log('editing not creating')

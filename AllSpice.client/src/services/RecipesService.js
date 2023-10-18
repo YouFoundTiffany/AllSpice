@@ -46,7 +46,7 @@ class RecipesService {
     }
 
     // STUB Delete Archive Recipe
-    async archiveResponse(recipeId) {
+    async archiveRecipe(recipeId) {
         const response = await api.delete(`api/recipes/${recipeId}`)
         logger.log('[DELETED RECIPE]', response.data)
         // FIXME NEED TO ADD TO OR MAKE WTIH A PUSH OR SOMETHNG
