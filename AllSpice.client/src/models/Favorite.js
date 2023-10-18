@@ -1,7 +1,7 @@
 export class Favorite {
     constructor(data) {
         this.id = data.id
-        this.quanity = data.quanity
+        this.accountId = data.accountId
         this.recipeId = data.recipeId
     }
 }

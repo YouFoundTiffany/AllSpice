@@ -12,9 +12,9 @@ public class FavoritesRepository
     {
         string sql = @"
             INSERT INTO favorites
-                (recipeId, creatorId)
+                (accountId, recipeId)
             VALUES
-                (@recipeId, @creatorId);
+                (@account, @recipeId);
             SELECT LAST_INSERT_ID();";
         int lastInsertId = _db.ExecuteScalar<int>(sql, favoriteData);
         favoriteData.Id = lastInsertId;
@@ -25,21 +25,25 @@ public class FavoritesRepository
 
     // REVIEW
     //  NOTE see on Favorites Service and Account Controller
-    internal List<RecipeFavoriteViewModel> GetRecipesByAccount(string creatorId)
+    internal List<RecipeFavoriteViewModel> GetRecipesByAccount(string userId)
     {
         string sql = @"
-        SELECT fav.*, rec.*
+        SELECT
+        fav.*,
+        rec.*
         FROM favorites fav
         JOIN recipes rec ON rec.id = fav.recipeId
-        WHERE fav.creatorId = @creatorId
+        WHERE fav.accountId = @userId
        ;";
+        //    NOTE ^^^^ change creatrId to accountId
         List<RecipeFavoriteViewModel> myRecipes = _db.Query<Favorite, RecipeFavoriteViewModel, RecipeFavoriteViewModel>(sql, (fav, recipe) =>
         {
             recipe.FavoriteId = fav.Id;
-            recipe.CreatorId = fav.CreatorId;
+            // recipe.AccountId = fav.CreatrId;
+            recipe.AccountId = fav.AccountId;
             return recipe;
 
-        }, new { creatorId }).ToList();
+        }, new { userId }).ToList();
         return myRecipes;
     }
 

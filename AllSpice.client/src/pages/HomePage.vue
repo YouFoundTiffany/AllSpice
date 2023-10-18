@@ -9,10 +9,11 @@
           <!-- <div class="col-md-5 m-0"> -->
           <!-- STUB Search bar -->
           <!-- <form @submit.prevent="searchRecipes" action=""> -->
+          <!-- FIXME get the  -->
           <!-- TODO v-model="editable.query" add back in when ready -->
-          <!-- <form @submit.prevent="searchMovies" class="row">
+          <!-- <form @submit.prevent="searchRecipes" class="row">
                 <div class="col-12 input-group">
-                  <input v-model="searchTerm" type="text" class="form-control" placeholder="search movies">
+                  <input v-model="searchTerm" type="text" class="form-control" placeholder="search recipes">
                   <button class="btn btn-primary"><i class="mdi mdi-magnify"></i></button>
                 </div>
               </form> -->

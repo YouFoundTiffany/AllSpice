@@ -102,10 +102,13 @@
                         class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">
                         Edit Recipe
                     </button>
-                    <button v-if="!favorites && user.isAuthenticated" @click="createFavorite" role="button"
+
+
+                    <!-- STUB FAV AND UN-FAV BUTTONS -->
+                    <button v-if="!myFavorites && user.isAuthenticated" @click="createFavorite" role="button"
                         class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">Favorite<i
                             class=""></i></button>
-                    <button v-else-if="user.isAuthenticated" @click="removeFavorite" role="button"
+                    <button v-else-if="myFavorites && user.isAuthenticated" @click="removeFavorite" role="button"
                         class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">Un-Fav<i
                             class="mdi mdi-silverware-spoon"></i></button>
                     <button v-else disabled role="button" class="btn btn-secondary m-1 bg-RussianGreen border-dark"
@@ -137,7 +140,7 @@ export default {
     // STUB Props
     // favoritesProp: { type: Array, required: false }
     props: {
-        recipeProp: { type: Object, required: true }, ingredientsProp: { type: Array, required: true },
+        recipeProp: { type: Object, required: true }, myFavorites: { type: Object, required: false }
     },
     // STUB Get Ingredients
     async getIngredients() {
@@ -178,6 +181,7 @@ export default {
         // STUB Return
         return {
             // STUB Computeds
+            appState: computed(() => AppState),
             ingredientData,
             recipeToArchive,
             showModal: false,
@@ -236,13 +240,11 @@ export default {
             // STUB Create Favorite
             async createFavorite() {
                 try {
-                    // inProgress.value = true
                     const recipeId = props.recipeProp.id
-                    // let favoriteData = { recipeId: route.params.recipeId }
-                    let favoriteData = { recipeId }
+                    const quantity = props.recipeProp.quantity;
+                    const favoriteData = { recipeId, quantity };
                     logger.log('fav data', favoriteData)
                     await favoritesService.createFavorite(favoriteData)
-                    // inProgress.value = false
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -274,7 +276,7 @@ export default {
 
         }
     },
-    components: {},
+
 }
 
 

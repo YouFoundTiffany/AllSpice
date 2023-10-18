@@ -15,6 +15,7 @@ public class FavoritesService
         return newFavorite;
     }
 
+    // FIXME
     internal Favorite GetFavoriteById(int favoriteId)
     {
         Favorite favorite = _repo.GetFavoriteById(favoriteId);
@@ -26,9 +27,9 @@ public class FavoritesService
     }
 
     // NOTE see on Favorites Repo and Account Controller
-    internal List<RecipeFavoriteViewModel> GetRecipesByAccount(string creatorId)
+    internal List<RecipeFavoriteViewModel> GetRecipesByAccount(string userId)
     {
-        List<RecipeFavoriteViewModel> myRecipes = _repo.GetRecipesByAccount(creatorId);
+        List<RecipeFavoriteViewModel> myRecipes = _repo.GetRecipesByAccount(userId);
         return myRecipes;
     }
 
@@ -46,7 +47,7 @@ public class FavoritesService
     {
         Favorite foundFavorite = _repo.GetFavoriteById(favoriteId);
         if (foundFavorite == null) throw new Exception("Invalid Favorite Id");
-        if (foundFavorite.CreatorId != userId) throw new Exception("Unauthorized");
+        if (foundFavorite.AccountId != userId) throw new Exception("Unauthorized");
         int rows = _repo.DeleteFavorite(favoriteId);
         if (rows > 1) throw new Exception("Something went wrong, less than");
         if (rows > 1) throw new Exception("Something went wrong, greater than");

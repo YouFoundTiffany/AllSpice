@@ -18,7 +18,7 @@ public class IngredientsController : ControllerBase
         try
         {
             Account userInfo = await _auth0.GetUserInfoAsync<Account>(HttpContext);
-            ingredientData.CreatorId = userInfo.Id;
+            ingredientData.AccountId = userInfo.Id;
             Ingredient newIngredient = _ingredientsService.CreateIngredient(ingredientData);
             // ? newIngredient.Creator = userInfo;
             return Ok(newIngredient);

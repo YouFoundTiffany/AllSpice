@@ -89,7 +89,7 @@ export default {
                         Pop.toast('Recipe Created', 'success') // tells the user good job
                         resetForm() // resets the form
                         Modal.getOrCreateInstance('#recipeModal').hide() // closes the modal
-                        // FIXME
+                        // FIXME how do I 'push' or do I need to?
                         // router.push({ name: 'Recipe Details', params: { recipeId: newRecipe.id } })
                     } else {
                         // NOTE do the put request here

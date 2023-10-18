@@ -9,6 +9,7 @@ class FavoritesService {
         const response = await api.post('api/favorites', favoriteData)
         logger.log('[CREATED FAVORITE]', response.data)
         AppState.activeRecipeFavorites.push(new Favorite(response.data))
+        AppState.myFavorites
 
     }
 
