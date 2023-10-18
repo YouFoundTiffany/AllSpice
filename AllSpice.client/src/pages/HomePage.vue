@@ -13,7 +13,7 @@
             <form @submit.prevent="getFavorites()" action="">
               <!-- TODO v-model="editable.query" add back in when ready -->
               <input @click="search()" placeholder="Search" id="searchBar" type="text" required minlength="2"
-                class="w-50 m-0 p-0 text-bottom" style="height: 37px;" />
+                class="w-50 m-0 p-0 text-bottom rounded-start" style="height: 37px;" />
               <button class="btn bg-RussianGreen" type="submit">
                 <i class="mdi mdi-magnify m-0 p-0"></i>
               </button>
@@ -22,7 +22,7 @@
           <div class="col-md-2">
 
             <!-- STUB LOGIN COMPONENT HERE -->
-            <div class="user-icon bg-Nutmeg rounded text-center">
+            <div class="user-icon bg-Nutmeg rounded text-center col-md-2 col-6">
               <Login />
             </div>
           </div>
@@ -38,38 +38,62 @@
       </div>
     </section>
 
-    <!-- Filter Buttons section -->
+    <!-- STUB Filter Buttons section -->
     <section class="my-4">
       <div class="container">
         <div class="row justify-content-center" style="margin-top: -50px;">
           <div class="col-6 d-flex justify-content-between">
-            <button class="col-5 btn btn-outline-light bg-Vermillion" @click="filterBy = ''">All</button>
-            <button class="col-5 btn btn-outline-light bg-Vermillion" @click="filterBy = 'favorites'">Favs</button>
+            <button class="col-5 btn btn-outline-light bg-Vermillion selectable" @click="filterBy = ''">All</button>
+            <button class="col-5 btn btn-outline-light bg-Vermillion selectable"
+              @click="filterBy = 'favorites'">Favs</button>
           </div>
         </div>
       </div>
     </section>
   </div>
 
-  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        ...
+  <!-- SECTION CREATE MODAL -->
+  <!-- STUB CREATE RECIPE MODAL -->
+
+  <div class="container justify-content-center">
+    <!-- modal button -->
+    <!-- v-if="user.isAuthenticated" -->
+    <div class="row text-center justify-content-center">
+      <button type="button" class="btn bg-RussianGreen border-dark selectable col-md-3 col-8 m-3 text-center"
+        data-bs-toggle="modal" data-bs-target="#recipeModal">
+        Create Recipe
+      </button>
+      <!-- modal button -->
+      <!-- modal -->
+      <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Create Your Recipe!</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- STUB Recipe Form -->
+              <RecipeForm :recipeProp="recipes" :ingredientsProp="ingredients" :favoritesProp="myFavorites" />
+              <!-- STUB Recipe Form -->
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+          </div>
+        </div>
       </div>
+      <!-- modal -->
     </div>
   </div>
-  <!-- STUB CREATE RECIPE COLLAPSE -->
-  <!-- <div class="container "> -->
-  <!-- <div class="row" v-if="user.isAuthenticated">
-    <CultForm />
-  </div>
-  </div> -->
+  <!-- container divs -->
+
   <!-- STUB RECIPE CARDS -->
   <section class="container-fluid">
     <div class="row">
       <div v-for="recipe in recipes" :key="recipe.id" class="col-12 col-md-3 mb-3">
-        <RecipeCard :recipeProp="recipe" :ingredientsProp="ingredients" :favoritesProp="favorites" />
+        <RecipeCard :recipeProp="recipe" :ingredientsProp="ingredients" :favoritesProp="myFavorites" />
       </div>
     </div>
   </section>
@@ -77,23 +101,25 @@
 </template>
 
 <script>
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import { recipesService } from '../services/RecipesService.js';
 import { ingredientsService } from '../services/IngredientsService.js';
 import Pop from '../utils/Pop.js';
 import { AppState } from '../AppState.js';
 import RecipeCard from '../components/RecipeCard.vue';
+import RecipeForm from '../components/RecipeForm.vue';
 import Login from '../components/Login.vue';
-// import { favoritesService } from '../services/FavoritesService.js';
-// import { accountService } from '../services/AccountService';
+import { favoritesService } from '../services/FavoritesService.js';
+import { accountService } from '../services/AccountService';
 
 export default {
 
   // STUB SETUP
   setup() {
     // STUB Variables and OnMounteds
-    const ingredients = computed(() => AppState.ingredients);
-    const favorites = computed(() => AppState.favorites);
+    const recipesProp = computed(() => AppState.recipes);
+    const ingredientsProp = computed(() => AppState.ingredients);
+    const favoritesProp = computed(() => AppState.favorites);
     onMounted(() => {
       getRecipes();
       // getFavorites();
@@ -112,6 +138,7 @@ export default {
     }
 
     // STUB GEt All Favorites
+    // ANCHOR don't need this dude
     // async function getFavorites() {
     //   // debugger
     //   try {
@@ -131,18 +158,19 @@ export default {
     }
 
     // STUB Get My Favorites Function
+    // ANCHOR don't need this here....this happens in the authService
     // async function getMyFavorites() {
     //   try {
-    //     await accountsService.getMyFavorites()
+    //     await accountService.getMyFavorites()
     //   } catch (error) {
     //     Pop.error(error);
     //   }
     // }
-
+    const recipe = ref(null);
     // STUB Returns
     return {
-      ingredients,
-      favorites,
+
+
       // NOTE SEE WEEK 7 latesummer23-postIt Home Page TiffTag
       // filterBy,
       // account: computed(() => AppState.account),
@@ -155,16 +183,18 @@ export default {
       //   }
       // }),
       user: computed(() => AppState.user),
+      // myFavorites:computed(()=>AppState.myFavorites),
       recipes: computed(() => AppState.recipes),
-      ingregients: computed(() => AppState.ingredients),
-      // favorites: computed(() => AppState.favorites),
+      ingredients: computed(() => AppState.ingredients),
+      isFavorite: computed(() => AppState.isFavorite),
+      myFavorites: computed(() => AppState.myFavorites),
 
 
     }
 
   },
   // STUB Components
-  components: { RecipeCard, Login },
+  components: { RecipeCard, Login, RecipeForm },
 
 }
 </script>

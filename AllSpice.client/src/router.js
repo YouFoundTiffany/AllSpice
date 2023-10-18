@@ -16,12 +16,12 @@ const routes = [
     name: 'About',
     component: loadPage('AboutPage')
   },
-  {
-    path: '/recipes/{recipeId}',
-    name: 'Recipe Details',
-    component: loadPage('RecipeDetialsPage')
+  // {
+  //   path: '/recipes/{recipeId}',
+  //   name: 'Recipe Details',
+  //   component: loadPage('RecipeDetialsPage')
 
-  },
+  // },
   {
     path: '/account',
     name: 'Account',

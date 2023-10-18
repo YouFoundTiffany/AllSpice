@@ -1,6 +1,5 @@
 import { AppState } from "../AppState.js"
 import { Ingredient } from "../models/Ingredient.js"
-// FIXME re-import
 import { logger } from "../utils/Logger.js"
 import { api } from "./AxiosService.js"
 

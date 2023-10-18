@@ -9,6 +9,7 @@ class FavoritesService {
         const response = await api.post('api/favorites', favoriteData)
         logger.log('[CREATED FAVORITE]', response.data)
         AppState.activeRecipeFavorites.push(new Favorite(response.data))
+
     }
 
     // STUB Remove Favorite
@@ -20,11 +21,11 @@ class FavoritesService {
     }
 
     // STUB Get Favorite
-    // async getFavorites() {
-    //     const response = await api.get('api/favorites')
-    //     logger.log('[GOT FAVORITES]', response.data)
-    //     AppState.favorites = response.data.map(favorite => new Favorite(favorite))
-    // }
+    async getMyFavorites() {
+        const response = await api.get('account/favorites')
+        logger.log('[GOT FAVORITES]', response.data)
+        AppState.myFavorites = response.data.map(favorite => new Favorite(favorite))
+    }
 
     // STUB Delete Favorite
     async archiveResponse(favoriteId) {

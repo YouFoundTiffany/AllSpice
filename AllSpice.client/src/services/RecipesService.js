@@ -10,7 +10,7 @@ import { api } from "./AxiosService.js"
 
 class RecipesService {
     // STUB createRecipe
-    async creatRecipe(recipeData) {
+    async createRecipe(recipeData) {
         const response = await api.post('api/recipes', recipeData)
         logger.log(response.data)
         const newRecipe = new Recipe(response.data)
