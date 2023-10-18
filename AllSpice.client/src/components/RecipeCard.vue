@@ -102,16 +102,15 @@
                         class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">
                         Edit Recipe
                     </button>
-                    <!-- :disabled="inProgress"  -->
-                    <button v-if="!isFavorite && user.isAuthenticated" @click="createFavorite" role="button"
-                        class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark"> Favorite<i
-                            class="mdi mdi-heart"></i></button>
+                    <button v-if="!favorites && user.isAuthenticated" @click="createFavorite" role="button"
+                        class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">Favorite<i
+                            class=""></i></button>
                     <button v-else-if="user.isAuthenticated" @click="removeFavorite" role="button"
                         class="btn rounded-pill bg-RussianGreen m-1 align-items-center border-dark">Un-Fav<i
-                            class="mdi mdi-heart"></i></button>
+                            class="mdi mdi-silverware-spoon"></i></button>
                     <button v-else disabled role="button" class="btn btn-secondary m-1 bg-RussianGreen border-dark"
                         title="Log In To Add Favorite Recipes">Log In To Add Favorite Recipes<i
-                            class="mdi mdi-heart"></i></button>
+                            class="mdi mdi-broken-heart"></i></button>
                 </div>
             </div>
         </div>
@@ -124,6 +123,7 @@ import { AppState } from '../AppState.js';
 import Pop from '../utils/Pop.js';
 import { recipesService } from '../services/RecipesService.js';
 import { ingredientsService } from '../services/IngredientsService.js';
+import { accountService } from '../services/AccountService.js';
 import { favoritesService } from '../services/FavoritesService.js';
 // import { Ingredient } from '../models/Ingredient.js';
 // import { Favorite } from '../models/Favorite.js';
@@ -135,8 +135,9 @@ import { Modal } from 'bootstrap';
 
 export default {
     // STUB Props
+    // favoritesProp: { type: Array, required: false }
     props: {
-        recipeProp: { type: Object, required: true }, ingredientsProp: { type: Array, required: true }, favoritesProp: { type: Array, required: false }
+        recipeProp: { type: Object, required: true }, ingredientsProp: { type: Array, required: true },
     },
     // STUB Get Ingredients
     async getIngredients() {
@@ -154,6 +155,14 @@ export default {
             Pop.error(error);
         }
     },
+    async getMyFavorites() {
+        try {
+            await accountService.getMyFavorites()
+        } catch (error) {
+            Pop.error(error);
+        }
+    },
+
 
     // STUB SETUP!
     setup(props) {
@@ -164,6 +173,8 @@ export default {
             // getFavorites();
             // getMyFavorites();
         })
+
+
         // STUB Return
         return {
             // STUB Computeds
@@ -172,9 +183,19 @@ export default {
             showModal: false,
             user: computed(() => AppState.user),
             account: computed(() => AppState.account),
-            isFavorite: computed(() => AppState.isFavorite),
-            favorites: computed(() => AppState.favorites),
+            favorites: computed(() => AppState.myFavorites),
+            isFavorites: computed(() => AppState.activeRecipeFavorites),
+            isFavorite: computed(() => AppState.activeRecipeFavorites.find(favorite => favorite.accountId == AppState.account.id)),
+            activeRecipeFavorites: (() => AppState.activeRecipeFavorites),
             getMyFavorites: computed(() => AppState.activeRecipeFavorites.find(favorite => favorite.accountId == AppState.account.id)),
+            myFavorites: computed(() => {
+                if (AppState.user.isAuthenticated) {
+                    const favoriteIds = AppState.myFavorites.map(favorite => favorite.recipeId);
+                    return favoriteIds.includes(props.recipeProp.id);
+                }
+                return false; // If the user is not authenticated, it's not a favorite.
+            }),
+            // myFavorites: computed(() => AppState.myFavorites),
 
             // STUB Create Ingredient
             async CreateIngredient() {
@@ -229,8 +250,6 @@ export default {
             // STUB Remove Favorite
             async removeFavorite() {
                 try {
-
-                    // NOTE need to find the collab in the appstate that is ours, and delete it by it's id
                     let favorite = AppState.activeRecipeFavorites.find(favorite => favorite.accountId == AppState.account.id)
                     await favoritesService.removeFavorite(favorite.id)
                 } catch (error) {
@@ -275,7 +294,7 @@ export default {
     object-fit: cover;
 }
 
-.mdi-heart {
+.mdi-silverware-spoon {
     position: absolute;
     top: 10px;
     right: 20px;
